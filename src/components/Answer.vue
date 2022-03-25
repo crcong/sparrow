@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { generateTilesByKindType, checkAnswer } from '~/logic'
-import type { Tile, TileKindType } from '~/types'
+import type { Tile, TileType } from '~/types'
 const props = defineProps<{
   tiles: Tile[],
-  typeKindType: TileKindType
+  tileType: TileType
 }>()
 const selected = reactive<Tile[]>([])
-const answers = generateTilesByKindType(props.typeKindType)
+const answers = generateTilesByKindType(props.tileType)
 
 function submitAnswer() {
   const data = checkAnswer(props.tiles, selected)

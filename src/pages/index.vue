@@ -13,6 +13,6 @@ const question = reactive(startGame())
     <div w-10 border="b #ccc" mt4 />
 
     <Question :tiles="question.q" />
-    <Answer :tiles="question.a" :type-kind-type="question.kindType" />
+    <Answer :tiles="question.a" :tile-type="question.kindType" />
   </div>
 </template>
