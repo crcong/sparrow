@@ -4,7 +4,7 @@ const props = defineProps<{
   tile: Tile
 }>()
 
-const url = computed(() => `../../public/images/${props.tile.type}.png`)
+const url = computed(() => `/images/${props.tile.type}.png`)
 </script>
 
 <template>
