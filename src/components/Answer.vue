@@ -7,6 +7,9 @@ const props = defineProps<{
 }>()
 const selected = reactive<Tile[]>([])
 const answers = generateTilesByKindType(props.tileType)
+const selectWrap = $ref<HTMLDivElement>()
+const answerWrap = $ref<HTMLDivElement>()
+const styleMap = $ref(new WeakMap())
 
 function submitAnswer() {
   const data = checkAnswer(props.tiles, selected)
@@ -16,35 +19,66 @@ function submitAnswer() {
     alert('Incorrect!')
   }
 }
+
+function calcStyle() {
+  answers.forEach((t, i) => {
+    const selectedIndex = selected.findIndex(a => a.type === t.type && a.value === t.value)
+    if (selectedIndex > -1) {
+      const selectEl = selectWrap.children[selectedIndex] as HTMLElement
+      const selectElLeft = selectEl.offsetLeft
+      const selectElTop = selectEl.offsetTop
+      const answerEl = answerWrap.children[i] as HTMLElement
+      const answerElLeft = answerEl.offsetLeft
+      const answerElTop = answerEl.offsetTop
+
+      styleMap.set(t, {
+        transform: `translate(${-(answerElLeft - selectElLeft)}px, ${-(answerElTop - selectElTop)}px)`,
+      })
+    } else {
+      styleMap.set(t, {})
+    }
+  })
+}
+
+function getStyle(tile: Tile) {
+  return styleMap.get(tile)
+}
+
+async function selectTile(tile: Tile) {
+  if (!selected.includes(tile)) {
+    selected.push(tile)
+  } else {
+    selected.splice(selected.indexOf(tile), 1)
+  }
+  await nextTick()
+  calcStyle()
+}
 </script>
 
 <template>
   <div mt3>
     <div border="b #ccc">
-      <div mt4 flex="~ gap-3" min-h-20 min-w-20>
-        <Tile v-for="tile, i in selected" :key="i" :tile="tile" />
+      <div ref="selectWrap" mt4 flex="~ gap-3" min-h-20 min-w-20>
+        <Tile v-for="tile, i in selected" :key="i" opacity-0 select-none :tile="tile" />
       </div>
     </div>
 
     <div w60>
-      <div mt10 flex="~ gap-10 wrap" justify-center>
+      <div ref="answerWrap" mt10 flex="~ gap-10 wrap" justify-center>
         <Tile
           v-for="tile, i in answers"
-          :key="i" cursor-pointer
+          :key="i"
+          cursor-pointer
+          transition-transform
           :tile="tile"
-          @click="!selected.includes(tile) && selected.push(tile)"
+          :style="getStyle(tile)"
+          @click="selectTile(tile)"
         />
       </div>
     </div>
   </div>
 
-  <button
-    mt12
-    btn
-    p="x6 y2"
-    :disabled="selected.length === 0"
-    @click="submitAnswer"
-  >
+  <button mt12 btn p="x6 y2" :disabled="selected.length === 0" @click="submitAnswer">
     确 定
   </button>
 </template>
