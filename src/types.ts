@@ -28,6 +28,4 @@ export interface QuestionFromJson {
   a: QuestionTileType[]
 }
 
-export interface QuestionsFromJson {
-  easy: QuestionFromJson[]
-}
+export type QuestionsFromJson = Record<string, QuestionFromJson[]>

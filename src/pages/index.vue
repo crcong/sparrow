@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { startGame } from '~/logic/'
-
-const question = reactive(startGame())
-
+import { question } from '~/logic'
 </script>
 
 <template>
@@ -14,5 +11,6 @@ const question = reactive(startGame())
 
     <Question :tiles="question.q" />
     <Answer :tiles="question.a" :tile-type="question.kindType" />
+    <Status />
   </div>
 </template>

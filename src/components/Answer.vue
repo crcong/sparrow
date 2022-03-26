@@ -1,12 +1,22 @@
 <script setup lang="ts">
-import { generateTilesByKindType, checkAnswer, promiseTimeout, WRONG_ANIMATION_DURATION } from '~/logic'
+import {
+  generateTilesByKindType,
+  checkAnswer,
+  promiseTimeout,
+  WRONG_ANIMATION_DURATION,
+  stage,
+  question,
+  startGame,
+  MAX_STAGE,
+  pauseCounter,
+} from '~/logic'
 import type { Tile, TileType } from '~/types'
 const props = defineProps<{
   tiles: Tile[],
   tileType: TileType
 }>()
-const selected = reactive<Tile[]>([])
-const answers = generateTilesByKindType(props.tileType)
+let selected = $ref<Tile[]>([])
+const answers = $computed(() => generateTilesByKindType(props.tileType))
 const selectWrap = $ref<HTMLDivElement>()
 const answerWrap = $ref<HTMLDivElement>()
 const styleMap = $ref(new WeakMap())
@@ -16,7 +26,14 @@ let isWrong = $ref(false)
 let stopShakeX: () => void | undefined
 async function submitAnswer() {
   if (checkAnswer(props.tiles, selected)) {
-    alert('Correct!')
+    if (stage.value === MAX_STAGE) {
+      pauseCounter()
+      alert('success!!!')
+      return
+    }
+    stage.value++
+    selected = []
+    question.value = startGame(stage.value)
   } else {
     if (isWrong) {
       isWrong = false
@@ -79,7 +96,6 @@ async function selectTile(tile: Tile) {
         <Tile
           v-for="tile, i in answers"
           :key="i"
-          cursor-pointer
           transition-transform
           :tile="tile"
           :style="getStyle(tile)"

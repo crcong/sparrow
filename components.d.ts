@@ -7,6 +7,7 @@ declare module 'vue' {
     Answer: typeof import('./src/components/Answer.vue')['default']
     Header: typeof import('./src/components/Header.vue')['default']
     Question: typeof import('./src/components/Question.vue')['default']
+    Status: typeof import('./src/components/Status.vue')['default']
     Tile: typeof import('./src/components/Tile.vue')['default']
   }
 }
