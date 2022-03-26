@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import confetti from 'canvas-confetti'
 import {
   generateTilesByKindType,
   checkAnswer,
@@ -9,13 +10,13 @@ import {
   startGame,
   MAX_STAGE,
   pauseCounter,
+  selected,
 } from '~/logic'
 import type { Tile, TileType } from '~/types'
 const props = defineProps<{
   tiles: Tile[],
   tileType: TileType
 }>()
-let selected = $ref<Tile[]>([])
 const answers = $computed(() => generateTilesByKindType(props.tileType))
 const selectWrap = $ref<HTMLDivElement>()
 const answerWrap = $ref<HTMLDivElement>()
@@ -23,17 +24,27 @@ const styleMap = $ref(new WeakMap())
 
 let isWrong = $ref(false)
 
+function onSuccess() {
+  pauseCounter()
+  confetti({
+    particleCount: 100,
+    spread: 70,
+    origin: { y: 0.6 },
+  })
+}
+
 let stopShakeX: () => void | undefined
 async function submitAnswer() {
-  if (checkAnswer(props.tiles, selected)) {
+  if (checkAnswer(props.tiles, selected.value)) {
     if (stage.value === MAX_STAGE) {
-      pauseCounter()
-      alert('success!!!')
+      onSuccess()
       return
     }
     stage.value++
-    selected = []
+    selected.value = []
     question.value = startGame(stage.value)
+    await nextTick()
+    calcStyle()
   } else {
     if (isWrong) {
       isWrong = false
@@ -50,7 +61,7 @@ async function submitAnswer() {
 
 function calcStyle() {
   answers.forEach((t, i) => {
-    const selectedIndex = selected.findIndex(a => a.type === t.type && a.value === t.value)
+    const selectedIndex = selected.value.findIndex(a => a.type === t.type && a.value === t.value)
     if (selectedIndex > -1) {
       const selectEl = selectWrap.children[selectedIndex] as HTMLElement
       const selectElLeft = selectEl.offsetLeft
@@ -73,10 +84,10 @@ function getStyle(tile: Tile) {
 }
 
 async function selectTile(tile: Tile) {
-  if (!selected.includes(tile)) {
-    selected.push(tile)
+  if (!selected.value.includes(tile)) {
+    selected.value.push(tile)
   } else {
-    selected.splice(selected.indexOf(tile), 1)
+    selected.value.splice(selected.value.indexOf(tile), 1)
   }
   await nextTick()
   calcStyle()
