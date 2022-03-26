@@ -8,6 +8,7 @@
 body {
   transition: background-color .5s;
   min-height: 100vh;
+  background-color: floralwhite;
 }
 
 .animate-shakeX {

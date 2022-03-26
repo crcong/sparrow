@@ -44,7 +44,6 @@ async function submitAnswer() {
     selected.value = []
     question.value = startGame(stage.value)
     await nextTick()
-    calcStyle()
   } else {
     if (isWrong) {
       isWrong = false
@@ -92,6 +91,8 @@ async function selectTile(tile: Tile) {
   await nextTick()
   calcStyle()
 }
+
+watch(() => stage.value, calcStyle)
 </script>
 
 <template>
