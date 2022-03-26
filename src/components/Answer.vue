@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { generateTilesByKindType, checkAnswer } from '~/logic'
+import { generateTilesByKindType, checkAnswer, promiseTimeout, WRONG_ANIMATION_DURATION } from '~/logic'
 import type { Tile, TileType } from '~/types'
 const props = defineProps<{
   tiles: Tile[],
@@ -11,12 +11,23 @@ const selectWrap = $ref<HTMLDivElement>()
 const answerWrap = $ref<HTMLDivElement>()
 const styleMap = $ref(new WeakMap())
 
-function submitAnswer() {
-  const data = checkAnswer(props.tiles, selected)
-  if (data.correct) {
+let isWrong = $ref(false)
+
+let stopShakeX: () => void | undefined
+async function submitAnswer() {
+  if (checkAnswer(props.tiles, selected)) {
     alert('Correct!')
   } else {
-    alert('Incorrect!')
+    if (isWrong) {
+      isWrong = false
+      stopShakeX()
+      await promiseTimeout(0)
+    }
+    isWrong = true
+    const { stop } = useTimeoutFn(() => {
+      isWrong = false
+    }, WRONG_ANIMATION_DURATION)
+    stopShakeX = stop
   }
 }
 
@@ -78,7 +89,13 @@ async function selectTile(tile: Tile) {
     </div>
   </div>
 
-  <button mt12 btn p="x6 y2" :disabled="selected.length === 0" @click="submitAnswer">
+  <button
+    mt12
+    btn
+    p="x6 y2"
+    :class="isWrong ? 'animate-shakeX' : ''"
+    :disabled="selected.length === 0" @click="submitAnswer"
+  >
     确 定
   </button>
 </template>
