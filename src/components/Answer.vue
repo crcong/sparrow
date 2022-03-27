@@ -96,7 +96,7 @@ watch(() => stage.value, calcStyle)
 </script>
 
 <template>
-  <div mt3>
+  <div>
     <div border="b #ccc">
       <div ref="selectWrap" mt4 flex="~ gap-3" min-h-20 min-w-20>
         <Tile v-for="tile, i in selected" :key="i" opacity-0 select-none :tile="tile" />
@@ -104,7 +104,7 @@ watch(() => stage.value, calcStyle)
     </div>
 
     <div w60>
-      <div ref="answerWrap" mt10 flex="~ gap-10 wrap" justify-center>
+      <div ref="answerWrap" mt8 flex="~ gap-7 wrap" justify-center>
         <Tile
           v-for="tile, i in answers"
           :key="i"
@@ -118,7 +118,7 @@ watch(() => stage.value, calcStyle)
   </div>
 
   <button
-    mt12
+    mt8
     btn
     p="x6 y2"
     :class="isWrong ? 'animate-shakeX' : ''"

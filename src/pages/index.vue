@@ -3,12 +3,7 @@ import { question } from '~/logic'
 </script>
 
 <template>
-  <div pt8 flex="~ col" items-center>
-    <h1 text-2xl>
-      Sparrow
-    </h1>
-    <div w-10 border="b #ccc" mt4 />
-
+  <div flex="~ col" items-center>
     <Question :tiles="question.q" />
     <Answer :tiles="question.a" :tile-type="question.kindType" />
     <Status />
