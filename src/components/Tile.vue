@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { getTileImagePath } from '~/logic'
 import type { Tile } from '~/types'
 const props = defineProps<{
   tile: Tile
 }>()
 
-const url = computed(() => `/images/${props.tile.value}${props.tile.type}.png`)
+const url = computed(() => getTileImagePath(props.tile))
 </script>
 
 <template>

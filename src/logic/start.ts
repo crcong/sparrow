@@ -1,6 +1,6 @@
 import _questions from '~/data/questions.json'
 import { Question, QuestionsFromJson, QuestionFromJson, QuestionTileType, TileType, Tile } from '~/types'
-import { TILE_TYPES } from './constants'
+import { HONOR_VALUES, TILE_TYPES } from './constants'
 import { maxStage } from './state'
 import { getRandom } from './utils'
 
@@ -30,13 +30,18 @@ function getRandomTileType() {
 }
 
 function transformToTile(t: QuestionTileType, tileType: TileType) {
-  const [value, type] = t.split('')
-  let _type = type
-  if (!/^\d/.test(value)) {
+  let _value
+  let _type
+  if (HONOR_VALUES.includes(t)) {
+    _value = t
     _type = 'F'
+  } else {
+    const [value, type] = t.split('')
+    _type = type
+    _value = parseInt(value)
   }
   return {
-    value: /^\d/.test(value) ? parseInt(value, 10) : value,
+    value: _value,
     type: _type || tileType,
   } as unknown as Tile
 }
