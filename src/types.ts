@@ -1,19 +1,25 @@
 export type TileType = 'T' | 'B' | 'W' | 'F'
 
-export type TileValue =
-  1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
-  'DF' | 'NF' | 'XF' | 'DF' | 'HZ' | 'FC' | 'BB'
+type Suit = {
+  type: 'T' | 'B' | 'W'
+  value: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+}
 
-export interface Tile {
-  value: TileValue
-  type: TileType
+type Honor = {
+  type: 'F'
+  value: 'DF' | 'NF' | 'XF' | 'DF' | 'HZ' | 'FC' | 'BB'
+}
+
+type _Tile = Suit | Honor
+
+export type Tile = _Tile & {
   selected?: boolean
 }
 
 export interface Question {
   q: Tile[]
   a: Tile[]
-  kindType: TileType
+  kindType: 'T' | 'B' | 'W'
 }
 
 export type QuestionTileType =
