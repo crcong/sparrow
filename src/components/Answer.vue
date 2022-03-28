@@ -8,7 +8,7 @@ import {
   stage,
   question,
   startGame,
-  MAX_STAGE,
+  maxStage,
   pauseCounter,
   selected,
 } from '~/logic'
@@ -36,7 +36,7 @@ function onSuccess() {
 let stopShakeX: () => void | undefined
 async function submitAnswer() {
   if (checkAnswer(props.tiles, selected.value)) {
-    if (stage.value === MAX_STAGE) {
+    if (stage.value === maxStage) {
       onSuccess()
       return
     }

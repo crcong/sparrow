@@ -1,18 +1,18 @@
 import _questions from '~/data/questions.json'
 import { Question, QuestionsFromJson, QuestionFromJson, QuestionTileType, TileType, Tile } from '~/types'
-import { MAX_STAGE, TILE_TYPES } from './constants'
+import { TILE_TYPES } from './constants'
+import { maxStage } from './state'
 import { getRandom } from './utils'
-
-const questions = _questions as QuestionsFromJson
 
 export function generateTilesByKindType(tileType: TileType) {
   return Array.from({ length: 9 }, (_, i) => ({ type: tileType, value: i + 1 } as Tile))
 }
 
 export function startGame(stage = 1) {
-  if (stage > MAX_STAGE) {
+  if (stage > maxStage) {
     throw new Error('stage is too large')
   }
+  const questions = _questions as QuestionsFromJson
   const index = getRandom(0, questions[`stage${stage}`].length - 1)
   return transformToQuestion(questions[`stage${stage}`][index])
 }
