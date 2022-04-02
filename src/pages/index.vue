@@ -7,5 +7,6 @@ import { question } from '~/logic'
     <Question :tiles="question.q" />
     <Answer :tiles="question.a" :tile-type="question.kindType" />
     <Status />
+    <Result />
   </div>
 </template>

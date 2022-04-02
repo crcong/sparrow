@@ -35,3 +35,10 @@ export interface QuestionFromJson {
 }
 
 export type QuestionsFromJson = Record<string, QuestionFromJson[]>
+
+/**
+ * 0: 未开始
+ * 1: 进行中
+ * 2: 结束
+ */
+export type GameState = 0 | 1 | 2

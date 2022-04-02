@@ -11,6 +11,7 @@ import {
   maxStage,
   pauseCounter,
   selected,
+  gameState,
 } from '~/logic'
 import type { Tile, TileType } from '~/types'
 const props = defineProps<{
@@ -25,6 +26,7 @@ const styleMap = $ref(new WeakMap())
 let isWrong = $ref(false)
 
 function onSuccess() {
+  gameState.value = 2
   pauseCounter()
   confetti({
     particleCount: 100,
