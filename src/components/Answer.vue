@@ -95,6 +95,7 @@ async function selectTile(tile: Tile) {
 }
 
 watch(() => stage.value, calcStyle)
+watch(() => gameState.value, calcStyle)
 </script>
 
 <template>
