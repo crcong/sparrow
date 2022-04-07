@@ -6,8 +6,10 @@ declare module 'vue' {
   export interface GlobalComponents {
     Answer: typeof import('./src/components/Answer.vue')['default']
     Header: typeof import('./src/components/Header.vue')['default']
+    Modal: typeof import('./src/components/Modal.vue')['default']
     Question: typeof import('./src/components/Question.vue')['default']
     Result: typeof import('./src/components/Result.vue')['default']
+    Rule: typeof import('./src/components/Rule.vue')['default']
     Status: typeof import('./src/components/Status.vue')['default']
     Tile: typeof import('./src/components/Tile.vue')['default']
   }

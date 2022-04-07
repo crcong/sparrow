@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { question } from '~/logic'
+import {
+  question,
+  showRule,
+} from '~/logic'
 </script>
 
 <template>
@@ -10,4 +13,7 @@ import { question } from '~/logic'
     <Status />
     <Result />
   </div>
+  <Modal v-model="showRule" direction="top" :border="false">
+    <Rule />
+  </Modal>
 </template>

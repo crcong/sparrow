@@ -12,3 +12,6 @@ export const question = ref(startGame())
 export const { counter, pause: pauseCounter, resume: resumeCounter } = useInterval(1000, { controls: true })
 export const spendTime = computed(() => parseTime(counter.value))
 export const selected = ref<Tile[]>([])
+
+// modal
+export const showRule = ref(false)
