@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["Vitesse"],
+  "cSpell.words": ["Vitesse", "fffaf"],
   "prettier.enable": false,
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.codeActionsOnSave": {

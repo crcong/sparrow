@@ -9,7 +9,7 @@
     <div
       class="bg-base border-base absolute transition-all duration-200 ease-out max-w-screen max-h-screen overflow-auto"
       :class="[positionClass, 'scrolls', border ? 'border-base' : '']"
-      :style="modelValue ? {} : { transform }"
+      :style="modelValue ? {} : { transform: transform }"
     >
       <slot />
     </div>

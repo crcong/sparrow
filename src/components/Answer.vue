@@ -1,23 +1,32 @@
 <script setup lang="ts">
-import confetti from 'canvas-confetti'
 import {
   generateTilesByKindType,
   checkAnswer,
   promiseTimeout,
   WRONG_ANIMATION_DURATION,
-  stage,
-  question,
-  startGame,
-  maxStage,
-  pauseCounter,
-  selected,
-  gameState,
 } from '~/logic'
 import type { Tile, TileType } from '~/types'
-const props = defineProps<{
+
+export interface AnswerExposed {
+  renderSelectedTile: () => void
+  clearSelectedTile: () => void
+}
+
+const props = withDefaults(defineProps<{
   tiles: Tile[],
-  tileType: TileType
+  tileType: TileType,
+  buttonText?: string,
+}>(), {
+  buttonText: '确 定',
+})
+
+// eslint-disable-next-line func-call-spacing
+const emits = defineEmits<{
+  (e: 'onCorrect'): void,
+  (e: 'onWrong'): void,
 }>()
+
+let selected = $ref<Tile[]>([])
 const answers = $computed(() => generateTilesByKindType(props.tileType))
 const selectWrap = $ref<HTMLDivElement>()
 const answerWrap = $ref<HTMLDivElement>()
@@ -25,27 +34,10 @@ const styleMap = $ref(new WeakMap())
 
 let isWrong = $ref(false)
 
-function onSuccess() {
-  gameState.value = 2
-  pauseCounter()
-  confetti({
-    particleCount: 100,
-    spread: 70,
-    origin: { y: 0.6 },
-  })
-}
-
 let stopShakeX: () => void | undefined
 async function submitAnswer() {
-  if (checkAnswer(props.tiles, selected.value)) {
-    if (stage.value === maxStage) {
-      onSuccess()
-      return
-    }
-    stage.value++
-    selected.value = []
-    question.value = startGame(stage.value)
-    await nextTick()
+  if (checkAnswer(props.tiles, selected)) {
+    emits('onCorrect')
   } else {
     if (isWrong) {
       isWrong = false
@@ -57,12 +49,13 @@ async function submitAnswer() {
       isWrong = false
     }, WRONG_ANIMATION_DURATION)
     stopShakeX = stop
+    emits('onWrong')
   }
 }
 
-function calcStyle() {
+function renderSelectedTile() {
   answers.forEach((t, i) => {
-    const selectedIndex = selected.value.findIndex(a => a.type === t.type && a.value === t.value)
+    const selectedIndex = selected.findIndex(a => a.type === t.type && a.value === t.value)
     if (selectedIndex > -1) {
       const selectEl = selectWrap.children[selectedIndex] as HTMLElement
       const selectElLeft = selectEl.offsetLeft
@@ -85,17 +78,24 @@ function getStyle(tile: Tile) {
 }
 
 async function selectTile(tile: Tile) {
-  if (!selected.value.includes(tile)) {
-    selected.value.push(tile)
+  if (!selected.includes(tile)) {
+    selected.push(tile)
   } else {
-    selected.value.splice(selected.value.indexOf(tile), 1)
+    selected.splice(selected.indexOf(tile), 1)
   }
   await nextTick()
-  calcStyle()
+  renderSelectedTile()
 }
 
-watch(() => stage.value, calcStyle)
-watch(() => gameState.value, calcStyle)
+function clearSelectedTile() {
+  selected = []
+  renderSelectedTile()
+}
+
+defineExpose<AnswerExposed>({
+  renderSelectedTile,
+  clearSelectedTile,
+})
 </script>
 
 <template>
@@ -127,6 +127,6 @@ watch(() => gameState.value, calcStyle)
     :class="isWrong ? 'animate-shakeX' : ''"
     :disabled="selected.length === 0" @click="submitAnswer"
   >
-    确 定
+    {{ props.buttonText }}
   </button>
 </template>
