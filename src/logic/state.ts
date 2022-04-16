@@ -14,5 +14,5 @@ export const question = ref(getQuestion())
 export const { counter, pause: pauseCounter, resume: resumeCounter } = useInterval(1000, { controls: true })
 export const spendTime = computed(() => parseTime(counter.value))
 
-// modal
-export const showRule = ref(false)
+export const showRule = ref(true)
+export const alreadyReadRule = useStorage('alreadyReadRule', false)
