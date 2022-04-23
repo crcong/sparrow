@@ -1,9 +1,9 @@
 import {
-  getQuestion,
   counter,
-  stage,
+  getQuestion,
   question,
   resumeCounter,
+  stage,
 } from '~/logic'
 import { gameState } from './state'
 

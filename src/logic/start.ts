@@ -1,4 +1,4 @@
-import { Question, QuestionFromJson, QuestionTileType, TileType, Tile } from '~/types'
+import { Question, QuestionFromJson, QuestionTileType, Tile, TileType } from '~/types'
 import { HONOR_VALUES, TILE_TYPES } from './constants'
 import { maxStage, questionData } from './state'
 import { getRandom } from './utils'

@@ -1,5 +1,5 @@
 import _questions from '~/data/questions.json'
-import { parseTime, getQuestion } from '~/logic/'
+import { getQuestion, parseTime } from '~/logic/'
 import { GameState, QuestionsFromJson } from '~/types'
 import { MAX_STAGE } from '~/logic'
 

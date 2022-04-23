@@ -1,21 +1,3 @@
-<template>
-  <div fixed z-40 :class="[containerPositionClass, modelValue ? '' : 'pointer-events-none']">
-    <div
-      v-if="mask"
-      class="bg-base left-0 right-0 top-0 bottom-0 absolute transition-opacity duration-500 ease-out"
-      :class="modelValue ? 'opacity-50' : 'opacity-0'"
-      @click="$emit('update:modelValue', false)"
-    />
-    <div
-      class="bg-base border-base absolute transition-all duration-200 ease-out max-w-screen max-h-screen overflow-auto"
-      :class="[positionClass, 'scrolls', border ? 'border-base' : '']"
-      :style="modelValue ? {} : { transform: transform }"
-    >
-      <slot />
-    </div>
-  </div>
-</template>
-
 <script setup lang='ts'>
 const props = withDefaults(defineProps<{
   modelValue?: boolean
@@ -29,7 +11,6 @@ const props = withDefaults(defineProps<{
   border: true,
 })
 
-// eslint-disable-next-line func-call-spacing
 defineEmits<{
   (e: 'update:modelValue', value: boolean): void
 }>()
@@ -80,3 +61,21 @@ const transform = computed(() => {
   }
 })
 </script>
+
+<template>
+  <div fixed z-40 :class="[containerPositionClass, modelValue ? '' : 'pointer-events-none']">
+    <div
+      v-if="mask"
+      class="bg-base left-0 right-0 top-0 bottom-0 absolute transition-opacity duration-500 ease-out"
+      :class="modelValue ? 'opacity-50' : 'opacity-0'"
+      @click="$emit('update:modelValue', false)"
+    />
+    <div
+      class="bg-base border-base absolute transition-all duration-200 ease-out max-w-screen max-h-screen overflow-auto"
+      :class="[positionClass, 'scrolls', border ? 'border-base' : '']"
+      :style="modelValue ? {} : { transform: transform }"
+    >
+      <slot />
+    </div>
+  </div>
+</template>

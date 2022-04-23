@@ -2,12 +2,12 @@
 import type { AnswerExposed } from '~/components/Answer.vue'
 import confetti from 'canvas-confetti'
 import {
-  question,
-  showRule,
+  gameState,
   getQuestion,
   maxStage,
   pauseCounter,
-  gameState,
+  question,
+  showRule,
   stage,
 } from '~/logic'
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { stage, counter } from '~/logic'
+import { counter, stage } from '~/logic'
 </script>
 
 <template>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {
-  generateTilesByKindType,
-  checkAnswer,
-  promiseTimeout,
   WRONG_ANIMATION_DURATION,
+  checkAnswer,
+  generateTilesByKindType,
+  promiseTimeout,
 } from '~/logic'
 import type { Tile, TileType } from '~/types'
 
@@ -20,7 +20,6 @@ const props = withDefaults(defineProps<{
   buttonText: '确 定',
 })
 
-// eslint-disable-next-line func-call-spacing
 const emits = defineEmits<{
   (e: 'onCorrect'): void,
   (e: 'onWrong'): void,

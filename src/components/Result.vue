@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { gameState, spendTime, resetGame } from '~/logic'
+import { gameState, resetGame, spendTime } from '~/logic'
 </script>
 
 <template>

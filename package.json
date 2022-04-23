@@ -4,7 +4,7 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite --port 3333 --open",
-    "lint": "eslint .",
+    "lint": "eslint . --fix",
     "typecheck": "vue-tsc --noEmit",
     "preview": "vite preview",
     "test": "vitest"
@@ -15,7 +15,7 @@
     "vue": "^3.2.31"
   },
   "devDependencies": {
-    "@crcong/eslint-config-vue": "^0.2.0",
+    "@crcong/eslint-config-vue": "^0.3.0",
     "@iconify-json/carbon": "^1.1.2",
     "@types/canvas-confetti": "^1.4.2",
     "@types/node": "^17.0.21",
