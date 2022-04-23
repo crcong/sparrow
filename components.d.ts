@@ -11,6 +11,7 @@ declare module 'vue' {
     Result: typeof import('./src/components/Result.vue')['default']
     Rule: typeof import('./src/components/Rule.vue')['default']
     Status: typeof import('./src/components/Status.vue')['default']
+    Thanks: typeof import('./src/components/Thanks.vue')['default']
     Tile: typeof import('./src/components/Tile.vue')['default']
   }
 }

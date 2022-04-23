@@ -16,3 +16,5 @@ export const spendTime = computed(() => parseTime(counter.value))
 
 export const showRule = ref(true)
 export const alreadyReadRule = useStorage('alreadyReadRule', false)
+
+export const showThanks = ref(false)

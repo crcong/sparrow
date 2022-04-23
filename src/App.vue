@@ -8,6 +8,7 @@ import {
   pauseCounter,
   question,
   showRule,
+  showThanks,
   stage,
 } from '~/logic'
 
@@ -48,5 +49,8 @@ function onCorrect() {
   </div>
   <Modal v-model="showRule" direction="top" :border="false">
     <Rule />
+  </Modal>
+  <Modal v-model="showThanks" direction="top">
+    <Thanks />
   </Modal>
 </template>

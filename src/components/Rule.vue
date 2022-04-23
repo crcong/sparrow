@@ -3,6 +3,7 @@ import {
   alreadyReadRule,
   resetGame,
   showRule,
+  showThanks,
 } from '~/logic'
 import type { Question } from '~/types'
 
@@ -115,9 +116,33 @@ function resetRule() {
           tile-type="B"
           @on-correct="onCorrect"
         />
-
-        <div h10 />
       </template>
+
+      <div h10 />
+      <div w-10 border="b #ccc" mb4 />
+
+      <div
+        op40
+        hover:op80
+        @click="showThanks = !showThanks"
+      >
+        特别感谢
+      </div>
+
+      <a
+        href="https://github.com/crcong/sparrow"
+        target="_blank"
+        flex="~ gap-1 justify-center"
+        mt2
+        items-center
+        op50
+        hover:op80
+      >
+        <div i-carbon-logo-github />
+        <div>Source Code</div>
+      </a>
+
+      <div h4 />
     </div>
   </div>
 </template>
