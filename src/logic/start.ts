@@ -1,4 +1,4 @@
-import { Question, QuestionFromJson, QuestionTileType, Tile, TileType } from '~/types'
+import { Question, QuestionData, QuestionTileType, Tile, TileType } from '~/types'
 import { HONOR_VALUES, TILE_TYPES } from './constants'
 import { maxStage, questionData } from './state'
 import { getRandom } from './utils'
@@ -16,7 +16,7 @@ export function getQuestion(stage = 1) {
   return transformToQuestion(questions[`stage${stage}`][index])
 }
 
-function transformToQuestion(questionFromJson: QuestionFromJson) {
+function transformToQuestion(questionFromJson: QuestionData) {
   const kindType = getRandomTileType()
   const a = questionFromJson.a.map((a) => transformToTile(a, kindType))
   const q = questionFromJson.q.map((q) => transformToTile(q, kindType))

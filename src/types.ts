@@ -29,12 +29,12 @@ export type QuestionTileType =
   '1W' | '2W' | '3W' | '4W' | '5W' | '6W' | '7W' | '8W' | '9W' |
   'DF' | 'NF' | 'XF' | 'DF' | 'HZ' | 'FC' | 'BB'
 
-export interface QuestionFromJson {
+export interface QuestionData {
   q: QuestionTileType[]
   a: QuestionTileType[]
 }
 
-export type QuestionsFromJson = Record<string, QuestionFromJson[]>
+export type QuestionsData = Record<string, QuestionData[]>
 
 /**
  * 0: 未开始

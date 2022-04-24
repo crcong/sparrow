@@ -1,12 +1,12 @@
 import _questions from '~/data/questions.json'
 import { getQuestion, parseTime } from '~/logic/'
-import { GameState, QuestionsFromJson } from '~/types'
+import { GameState, QuestionsData } from '~/types'
 import { MAX_STAGE } from '~/logic'
 
 const params = new URLSearchParams(window.location.search)
 export const isDev = params.get('dev') === '666'
 
-export const questionData = _questions as QuestionsFromJson
+export const questionData = _questions as QuestionsData
 export const gameState = ref<GameState>(1)
 export const maxStage = isDev ? 1 : MAX_STAGE
 export const stage = ref(1)
