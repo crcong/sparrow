@@ -32,6 +32,7 @@ export type QuestionTileType =
 export interface QuestionData {
   q: QuestionTileType[]
   a: QuestionTileType[]
+  canAutoGenerate?: boolean
 }
 
 export type QuestionsData = Record<string, QuestionData[]>

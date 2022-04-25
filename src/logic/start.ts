@@ -1,5 +1,6 @@
 import { Question, QuestionData, QuestionTileType, Tile, TileType } from '~/types'
 import { HONOR_VALUES, TILE_TYPES } from './constants'
+import { generateSimilarQuestions } from './question'
 import { maxStage, questionData } from './state'
 import { getRandom } from './utils'
 
@@ -7,13 +8,31 @@ export function generateTilesByKindType(tileType: TileType) {
   return Array.from({ length: 9 }, (_, i) => ({ type: tileType, value: i + 1 } as Tile))
 }
 
+function generateQuestions(questionsData: QuestionData[]) {
+  const result = questionsData.slice()
+  questionsData.forEach((question) => {
+    if (question.canAutoGenerate) {
+      const similarQuestions = generateSimilarQuestions(question)
+      similarQuestions.forEach((q) => delete q.canAutoGenerate)
+      result.push(...similarQuestions)
+    }
+  })
+  return result
+}
+
+const questionMap = new Map<string, QuestionData[]>()
+
 export function getQuestion(stage = 1) {
   if (stage > maxStage) {
     throw new Error('stage is too large')
   }
-  const questions = questionData
-  const index = getRandom(0, questions[`stage${stage}`].length - 1)
-  return transformToQuestion(questions[`stage${stage}`][index])
+  let questionsData = questionMap.get(`stage${stage}`)
+  if (!questionsData) {
+    questionsData = generateQuestions(questionData[`stage${stage}`])
+    questionMap.set(`stage${stage}`, questionsData)
+  }
+  const index = getRandom(0, questionsData.length - 1)
+  return transformToQuestion(questionsData[index])
 }
 
 function transformToQuestion(questionFromJson: QuestionData) {
